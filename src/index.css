@@ -1,13 +1,57 @@
+@font-face {
+  font-family: "birdscratches";
+  src: url("./fonts/birdscratchesbolditalic-webfont.woff2") format("woff2"),
+    url("./fonts/birdscratchesbolditalic-webfont.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: -0.1em;
+}
+
+@font-face {
+  font-family: "birdscratches";
+  src: url("./fonts/birdscratchesbolditalic-webfont.woff2") format("woff2"),
+    url("./fonts/birdscratchesbolditalic-webfont.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  letter-spacing: -0.1em;
+}
+
+@font-face {
+  font-family: "birdscratches";
+  src: url("./fonts/birdscratchesbolditalic-webfont.woff2") format("woff2"),
+    url("./fonts/birdscratchesbolditalic-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+  letter-spacing: -0.1em;
+}
+@font-face {
+  font-family: "birdscratches";
+  src: url("./fonts/birdscratches-webfont.woff2") format("woff2"),
+    url("./fonts/birdscratches-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --core-font: "birdscratches", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--core-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 24px;
+  padding: 2em;
+}
+
+input {
+  font-family: var(--core-font) !important;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
