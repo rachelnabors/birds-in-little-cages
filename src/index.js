@@ -2,11 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import ShoppingList from "./shoppingList/ShoppingList";
+import LostLog from "./lostLog/LostLog";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ShoppingList />
+    {/* <ShoppingList /> */}
+    <LostLog />
   </React.StrictMode>,
   document.getElementById("root")
 );
