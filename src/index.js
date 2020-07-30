@@ -4,12 +4,12 @@ import "./index.css";
 import ShoppingList from "./shoppingList/ShoppingList";
 import LostLog from "./lostLog/LostLog";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Switch>
+    <BrowserRouter>
+      <Routes>
         <Route exact path="/">
           <nav className="nav_main">
             <Link to="/">Home</Link>
@@ -17,14 +17,10 @@ ReactDOM.render(
             <Link to="/lost-log">Lost Log</Link>
           </nav>
         </Route>
-        <Route path="/shopping-for-love">
-          <ShoppingList />
-        </Route>
-        <Route path="/lost-log">
-          <LostLog />
-        </Route>
-      </Switch>
-    </Router>
+        <Route path="/shopping-for-love" element={<ShoppingList />} />
+        <Route path="/lost-log" element={<LostLog />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
