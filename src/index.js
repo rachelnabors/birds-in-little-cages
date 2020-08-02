@@ -1,14 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import ShoppingList from "./shoppingList/ShoppingList";
+import ShoppingLove from "./shoppingLove/ShoppingLove";
+import Home from "./Home";
 import LostLog from "./lostLog/LostLog";
 import * as serviceWorker from "./serviceWorker";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <ShoppingList /> */}
-    <LostLog />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/shopping-for-love/*" element={<ShoppingLove />} />
+        <Route path="/lost-log" element={<LostLog />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

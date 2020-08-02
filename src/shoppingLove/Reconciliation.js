@@ -1,9 +1,18 @@
 import React, { useState } from "react";
+import {
+  reconciledList as recoilReconciledList,
+  doNotWantList as recoilDoNotWantList,
+} from "./ShoppingLove";
+import { Navigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 
-function PositiveWant(props) {
+function Reconciliation() {
   const [positiveWant, setPositiveWant] = useState("");
-  const [positiveWantList, setPositiveWantList] = useState([]);
-  const [counterNegWantList, setcounterNegWantList] = useState(0);
+  const [positiveWantList, setPositiveWantList] = useRecoilState(
+    recoilReconciledList
+  );
+  const negativeWantList = useRecoilValue(recoilDoNotWantList);
+  const [counterNegWantList, setCounterNegWantList] = useState(0);
 
   function handleAddingPositiveWant(e) {
     e.preventDefault();
@@ -19,8 +28,8 @@ function PositiveWant(props) {
       },
     ]);
     setPositiveWant("");
-    if (counterNegWantList <= props.listToAnalyze.length) {
-      setcounterNegWantList(counterNegWantList + 1);
+    if (counterNegWantList <= negativeWantList.length) {
+      setCounterNegWantList(counterNegWantList + 1);
     }
 
     //else {
@@ -28,7 +37,9 @@ function PositiveWant(props) {
     //}
   }
 
-  if (props.currentPage === 2) {
+  if (!negativeWantList.length) {
+    return <Navigate to="../do-not-want" />;
+  } else {
     return (
       <section>
         <h1>Can you rephrase these?</h1>
@@ -36,10 +47,10 @@ function PositiveWant(props) {
           Can you express everything you don't want in terms of something you do
           want?
         </p>
-        {props.listToAnalyze.length > counterNegWantList && (
+        {negativeWantList.length > counterNegWantList && (
           <form onSubmit={handleAddingPositiveWant}>
             <p>
-              <strong>{props.listToAnalyze[counterNegWantList].want}</strong>
+              <strong>{negativeWantList[counterNegWantList].want}</strong>
             </p>
             <input
               type="text"
@@ -47,7 +58,7 @@ function PositiveWant(props) {
               value={positiveWant}
               onChange={(e) => setPositiveWant(e.target.value)}
             />
-            <input type="submit" value="Add" />
+            <input type="submit" value="Convert" />
           </form>
         )}
         <ul className="list">
@@ -55,14 +66,12 @@ function PositiveWant(props) {
             <li key={want.id}>{want.want}</li>
           ))}
         </ul>
-        {counterNegWantList === props.listToAnalyze.length && (
-          <button onClick={props.onFormSubmit}>Great, I'm done!</button>
+        {counterNegWantList === negativeWantList.length && (
+          <p>Great, I'm done!</p>
         )}
       </section>
     );
-  } else {
-    return null;
   }
 }
 
-export default PositiveWant;
+export default Reconciliation;
