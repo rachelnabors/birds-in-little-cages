@@ -1,23 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import ShoppingList from "./shoppingList/ShoppingList";
+import ShoppingLove from "./shoppingLove/ShoppingLove";
+import Home from "./Home";
 import LostLog from "./lostLog/LostLog";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route exact path="/">
-          <nav className="nav_main">
-            <Link to="/">Home</Link>
-            <Link to="/shopping-for-love">Shopping for Love</Link>
-            <Link to="/lost-log">Lost Log</Link>
-          </nav>
-        </Route>
-        <Route path="/shopping-for-love" element={<ShoppingList />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/shopping-for-love/*" element={<ShoppingLove />} />
         <Route path="/lost-log" element={<LostLog />} />
       </Routes>
     </BrowserRouter>
