@@ -1,23 +1,15 @@
-import React, { useState } from "react";
-import { wantList as recoilWantList } from "./ShoppingLove";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { ListContext } from "./listContext";
 
-function Want(props) {
+function Want() {
   const [newWant, setNewWant] = useState("");
-  const [wantList, setWantList] = useRecoilState(recoilWantList);
+  const { list, addToWantList } = useContext(ListContext);
 
   function handleAddingWant(e) {
     e.preventDefault();
     if (!newWant) return;
-    setWantList([
-      {
-        want: newWant,
-        id:
-          newWant + wantList.length + Math.floor(Math.random() * (100 - 0) + 0),
-      },
-      ...wantList,
-    ]);
+    addToWantList(newWant);
     setNewWant("");
   }
 
@@ -34,11 +26,11 @@ function Want(props) {
         <input type="submit" value="Add" />
       </form>
       <ul className="list">
-        {wantList.map((want) => (
+        {list.wantList.map((want) => (
           <li key={want.id}>{want.want}</li>
         ))}
       </ul>
-      {wantList.length > 0 && (
+      {list.wantList.length > 0 && (
         <Link to="do-not-want" className="button">
           Great, I'm done!
         </Link>

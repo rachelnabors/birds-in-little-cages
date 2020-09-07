@@ -16,7 +16,7 @@ function LostLog() {
       if (incomingLog.id !== "920 cntd") {
         const receiveLog = setTimeout(() => {
           transferLogs(incomingLog);
-        }, incomingLog.delay * 10);
+        }, incomingLog.delay * 2000);
         return () => {
           clearTimeout(receiveLog);
         };

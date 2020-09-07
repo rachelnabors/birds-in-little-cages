@@ -1,34 +1,18 @@
-import React, { useState } from "react";
-import {
-  reconciledList as recoilReconciledList,
-  doNotWantList as recoilDoNotWantList,
-} from "./ShoppingLove";
+import React, { useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { ListContext } from "./listContext";
 
 function Reconciliation() {
   const [positiveWant, setPositiveWant] = useState("");
-  const [positiveWantList, setPositiveWantList] = useRecoilState(
-    recoilReconciledList
-  );
-  const negativeWantList = useRecoilValue(recoilDoNotWantList);
+  const { list, addToReconciledList } = useContext(ListContext);
   const [counterNegWantList, setCounterNegWantList] = useState(0);
 
   function handleAddingPositiveWant(e) {
     e.preventDefault();
     if (!positiveWant) return;
-    setPositiveWantList([
-      ...positiveWantList,
-      {
-        want: positiveWant,
-        id:
-          positiveWant +
-          positiveWantList.length +
-          Math.floor(Math.random() * (100 - 0) + 0),
-      },
-    ]);
+    addToReconciledList(positiveWant);
     setPositiveWant("");
-    if (counterNegWantList <= negativeWantList.length) {
+    if (counterNegWantList <= list.doNotWantList.length) {
       setCounterNegWantList(counterNegWantList + 1);
     }
 
@@ -37,7 +21,7 @@ function Reconciliation() {
     //}
   }
 
-  if (!negativeWantList.length) {
+  if (!list.doNotWantList.length) {
     return <Navigate to="../do-not-want" />;
   } else {
     return (
@@ -47,10 +31,10 @@ function Reconciliation() {
           Can you express everything you don't want in terms of something you do
           want?
         </p>
-        {negativeWantList.length > counterNegWantList && (
+        {list.doNotWantList.length > counterNegWantList && (
           <form onSubmit={handleAddingPositiveWant}>
             <p>
-              <strong>{negativeWantList[counterNegWantList].want}</strong>
+              <strong>{list.doNotWantList[counterNegWantList].want}</strong>
             </p>
             <input
               type="text"
@@ -62,11 +46,11 @@ function Reconciliation() {
           </form>
         )}
         <ul className="list">
-          {positiveWantList.map((want) => (
+          {list.reconciledList.map((want) => (
             <li key={want.id}>{want.want}</li>
           ))}
         </ul>
-        {counterNegWantList === negativeWantList.length && (
+        {counterNegWantList === list.doNotWantList.length && (
           <p>Great, I'm done!</p>
         )}
       </section>
