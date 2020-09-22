@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { ListContext } from "./listContext";
 
 function Reconciliation() {
@@ -51,7 +51,9 @@ function Reconciliation() {
           ))}
         </ul>
         {counterNegWantList === list.doNotWantList.length && (
-          <p>Great, I'm done!</p>
+          <Link to="../pick-and-choose" className="button">
+            Great, I'm done!
+          </Link>
         )}
       </section>
     );

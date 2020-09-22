@@ -4,6 +4,7 @@ const allLists = {
   wantList: [],
   doNotWantList: [],
   reconciledList: [],
+  chosenList: [],
 };
 
 export const ListContext = createContext(null);
@@ -19,7 +20,7 @@ export default ({ children }) => {
         {
           want: text,
           id:
-            text.split(" ").join("").toLowerCase +
+            text.split(" ").join("").toLowerCase() +
             text.length +
             Math.floor(Math.random() * (100 - 0) + 0),
         },
@@ -35,7 +36,7 @@ export default ({ children }) => {
         {
           want: text,
           id:
-            text.split(" ").join("").toLowerCase +
+            text.split(" ").join("").toLowerCase() +
             text.length +
             Math.floor(Math.random() * (100 - 0) + 0),
         },
@@ -51,7 +52,24 @@ export default ({ children }) => {
         {
           want: text,
           id:
-            text.split(" ").join("").toLowerCase +
+            text.split(" ").join("").toLowerCase() +
+            text.length +
+            Math.floor(Math.random() * (100 - 0) + 0),
+        },
+      ],
+    }));
+  };
+
+  const addToChosenList = (text) => {
+    setList((lists) => ({
+      ...lists,
+      chosenList: [
+        ...lists.chosenList,
+        {
+          want: text,
+          chosen: text,
+          id:
+            text.split(" ").join("").toLowerCase() +
             text.length +
             Math.floor(Math.random() * (100 - 0) + 0),
         },
@@ -64,8 +82,9 @@ export default ({ children }) => {
       value={{
         list,
         addToWantList,
-        addToReconciledList,
         addToDoNotWantList,
+        addToReconciledList,
+        addToChosenList,
       }}
     >
       {children}
