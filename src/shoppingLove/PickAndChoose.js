@@ -59,7 +59,9 @@ function PickAndChoose() {
     chosenItems.forEach(function (chosenItem) {
       // filter compositeList and add to ChosenList the compositeListItem whose id it matches
       addToChosenList(
-        compositeList.filter((compositeItem) => compositeItem.id === chosenItem)
+        compositeList.filter(
+          (compositeItem) => compositeItem.id === chosenItem
+        )[0]
       );
     });
   }
