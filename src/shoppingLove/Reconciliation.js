@@ -15,14 +15,14 @@ function Reconciliation() {
     if (counterNegWantList <= list.doNotWantList.length) {
       setCounterNegWantList(counterNegWantList + 1);
     }
-
-    //else {
-    // TODO hide the form for processing negative wants and move on
-    //}
   }
 
   if (!list.doNotWantList.length) {
     return <Navigate to="../do-not-want" />;
+  } else if (counterNegWantList === list.doNotWantList.length) {
+    // when user has finished converting all their don't wants to positive statements,
+    // move on to the next page
+    return <Navigate to="../pick-and-choose" />;
   } else {
     return (
       <section>
@@ -50,11 +50,6 @@ function Reconciliation() {
             <li key={want.id}>{want.want}</li>
           ))}
         </ul>
-        {counterNegWantList === list.doNotWantList.length && (
-          <Link to="../pick-and-choose" className="button">
-            Great, I'm done!
-          </Link>
-        )}
       </section>
     );
   }

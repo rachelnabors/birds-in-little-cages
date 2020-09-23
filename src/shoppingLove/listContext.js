@@ -60,20 +60,10 @@ export default ({ children }) => {
     }));
   };
 
-  const addToChosenList = (text) => {
+  const addToChosenList = (item) => {
     setList((lists) => ({
       ...lists,
-      chosenList: [
-        ...lists.chosenList,
-        {
-          want: text,
-          chosen: text,
-          id:
-            text.split(" ").join("").toLowerCase() +
-            text.length +
-            Math.floor(Math.random() * (100 - 0) + 0),
-        },
-      ],
+      chosenList: [...lists.chosenList, item],
     }));
   };
 
