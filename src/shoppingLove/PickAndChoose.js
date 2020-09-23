@@ -8,6 +8,16 @@ function PickAndChoose() {
   const [chosenItemsCount, setChosenItemsCount] = useState(0);
   const [chosenItems, setChosenItems] = useState([]);
 
+  useEffect(() => {
+    // when the value of list.chosentList changes, save it to localStorage:
+    localStorage.setItem("shoppingLoveList", JSON.stringify(list.chosenList));
+  }, [list.chosenList]);
+
+  useEffect(function () {
+    // randomize the composite list only on the first render of the component
+    shuffle(compositeList);
+  }, []);
+
   // combine two lists into one temp one
   const compositeList = list.wantList.concat(list.reconciledList);
 
@@ -27,11 +37,6 @@ function PickAndChoose() {
       [array[i], array[j]] = [array[j], array[i]];
     }
   }
-
-  useEffect(function () {
-    // randomize the composite list only on the first render of the component
-    shuffle(compositeList);
-  }, []);
 
   function handleTickingCheckbox(checkboxElem, id, setChecked) {
     if (checkboxElem.checked) {
@@ -64,6 +69,7 @@ function PickAndChoose() {
         )[0]
       );
     });
+    // addToLocalStorage
   }
 
   if (!list.reconciledList.length) {
