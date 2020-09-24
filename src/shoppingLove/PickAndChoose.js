@@ -8,6 +8,10 @@ function PickAndChoose() {
   const [chosenItemsCount, setChosenItemsCount] = useState(0);
   const [chosenItems, setChosenItems] = useState([]);
 
+  // combine two lists into one temp one
+  const compositeList = list.wantList.concat(list.reconciledList);
+  const topCount = 5;
+
   useEffect(() => {
     // when the value of list.chosentList changes, save it to localStorage:
     localStorage.setItem("shoppingLoveList", JSON.stringify(list.chosenList));
@@ -18,17 +22,14 @@ function PickAndChoose() {
     shuffle(compositeList);
   }, []);
 
-  // combine two lists into one temp one
-  const compositeList = list.wantList.concat(list.reconciledList);
-
-  let topCount;
-
-  // we want either the top 5 or all traits
-  if (compositeList.length >= 5) {
-    topCount = 5;
-  } else {
-    topCount = compositeList.length;
-  }
+  useEffect(function () {
+    // we want either the top 5 or all traits
+    if (compositeList.length < topCount) {
+      // if compositeList.length === topCount
+      // make a list of the three things
+      addToChosenList(compositeList);
+    }
+  }, []);
 
   // Fisher-Yates algorithm practically shuffles itself ;)
   function shuffle(array) {
@@ -45,7 +46,6 @@ function PickAndChoose() {
       setChosenItems((latestItems) => {
         return [...latestItems, id];
       });
-      console.log(chosenItems);
     } else {
       setChecked(false);
       setChosenItemsCount((previousCount) => previousCount - 1);
@@ -64,9 +64,7 @@ function PickAndChoose() {
     chosenItems.forEach(function (chosenItem) {
       // filter compositeList and add to ChosenList the compositeListItem whose id it matches
       addToChosenList(
-        compositeList.filter(
-          (compositeItem) => compositeItem.id === chosenItem
-        )[0]
+        compositeList.filter((compositeItem) => compositeItem.id === chosenItem)
       );
     });
     // addToLocalStorage

@@ -63,7 +63,7 @@ export default ({ children }) => {
   const addToChosenList = (item) => {
     setList((lists) => ({
       ...lists,
-      chosenList: [...lists.chosenList, item],
+      chosenList: [...lists.chosenList, ...item],
     }));
   };
 
