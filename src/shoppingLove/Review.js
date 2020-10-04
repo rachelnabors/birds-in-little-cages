@@ -1,27 +1,34 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Navigate, Link } from "react-router-dom";
-import { ListContext } from "./listContext";
 
 function Review() {
-  const { list } = useContext(ListContext);
+  const list = JSON.parse(localStorage.getItem("shoppingLoveList"));
 
-  console.log(list);
-
-  if (!list.chosenList.length) {
+  if (!list.length) {
     return <Navigate to="../reconciliation" />;
   } else {
-    // Todo: generate from Local Storage
     return (
       <section>
         <h1>Your shopping list:</h1>
         <ul className="list">
-          {list.chosenList.map((want) => (
+          {list.map((want) => (
             <li key={want.id}>{want.want}</li>
           ))}
         </ul>
-        <Link to="/" className="button">
-          Great, I'm done!
-        </Link>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/" className="button">
+                Great, I'm done!
+              </Link>
+            </li>
+            <li>
+              <Link to="/shopping-for-love" className="button">
+                Make a new list...
+              </Link>
+            </li>
+          </ul>
+        </nav>
       </section>
     );
   }
