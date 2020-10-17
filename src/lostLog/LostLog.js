@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import lostLogs from "./logs.js";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function LostLog() {
   const [logsReceived, setLogsReceived] = useState([]);
