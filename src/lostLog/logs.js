@@ -3,7 +3,7 @@ const logs = [
     id: 707,
     delay: 1,
     entry:
-      "Dating log 707, I learned that at 35, I’m one of the last remaining free agents in my generation. When I meet single people IRL, I know they are younger than I, and it is my sworn duty to protect them. We still don’t know what happened to the other thirty somethings... all gone..",
+      "I learned that at 35, I’m one of the last remaining free agents in my generation. When I meet single people IRL, I know they are younger than I, and it is my sworn duty to protect them. We still don’t know what happened to the other thirty somethings... all gone..",
   },
   {
     id: 810,

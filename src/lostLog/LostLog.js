@@ -47,7 +47,7 @@ function LostLog() {
     } else {
       return (
         <li>
-          <strong>Log {props.id}</strong> {props.entry}
+          <strong>Dating Log {props.id}</strong> {props.entry}
         </li>
       );
     }

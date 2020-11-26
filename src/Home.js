@@ -13,6 +13,7 @@ function Home() {
       ) : (
         <Link to="/shopping-for-love">Shopping for Love</Link>
       )}
+      <Link to="/holidays-left">Your Favorite Holiday</Link>
     </nav>
   );
 }

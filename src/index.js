@@ -4,6 +4,7 @@ import "./index.css";
 import ShoppingLove from "./shoppingLove/ShoppingLove";
 import Home from "./Home";
 import LostLog from "./lostLog/LostLog";
+import HolidaysLeft from "./holidaysLeft/HolidaysLeft";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -14,6 +15,7 @@ ReactDOM.render(
         <Route path="/" element={<Home />} />
         <Route path="/shopping-for-love/*" element={<ShoppingLove />} />
         <Route path="/lost-log" element={<LostLog />} />
+        <Route path="/holidays-Left" element={<HolidaysLeft />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
