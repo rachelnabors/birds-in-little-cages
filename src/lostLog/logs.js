@@ -9,7 +9,7 @@ const logs = [
     id: 810,
     delay: 3,
     entry:
-      "Despite my better judgement, I’ve grown... attached to one of the locals. He turns thirty in a few months. I can’t get to attached. I have to get to the bottom of these disappearances... and he could be next",
+      "Despite my better judgement, I’ve grown... attached to one of the locals. He turns thirty in a few months. I can’t get too attached. I have to get to the bottom of these disappearances... and he could be next",
   },
   {
     id: 820,
