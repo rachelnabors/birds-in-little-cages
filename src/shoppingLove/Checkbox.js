@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import { Checkbox as ChakraCheckbox } from "@chakra-ui/react";
 
 function Checkbox(props) {
   const [checked, setChecked] = useState(false);
   if (checked) {
     return (
       <label key={props.id} htmlFor={props.id}>
-        <input
-          type="checkbox"
+        <ChakraCheckbox
           id={props.id}
           value={props.want}
           onChange={(e) => props.handleTickingCheckbox(e.target, setChecked)}
@@ -18,7 +18,7 @@ function Checkbox(props) {
   } else {
     return (
       <label key={props.id} htmlFor={props.id}>
-        <input
+        <ChakraCheckbox
           type="checkbox"
           id={props.id}
           value={props.want}

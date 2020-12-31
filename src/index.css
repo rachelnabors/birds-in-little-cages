@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: "birdscratches";
   src: url("./fonts/birdscratchesbolditalic-webfont.woff2") format("woff2"),
     url("./fonts/birdscratchesbolditalic-webfont.woff") format("woff");
@@ -30,9 +30,9 @@
     url("./fonts/birdscratches-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-}
+} */
 
-:root {
+/* :root {
   --core-font: "birdscratches", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
@@ -59,4 +59,4 @@ code {
 .nav_main a {
   display: inline-block;
   margin: 0.5em;
-}
+} */

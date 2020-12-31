@@ -1,5 +1,12 @@
 import React from "react";
-import { Navigate, Link } from "react-router-dom";
+import { Navigate, Link as ReactLink } from "react-router-dom";
+import {
+  Button,
+  ButtonGroup,
+  Heading,
+  ListItem,
+  UnorderedList,
+} from "@chakra-ui/react";
 
 function Review() {
   const list = JSON.parse(localStorage.getItem("shoppingLoveList"));
@@ -9,25 +16,21 @@ function Review() {
   } else {
     return (
       <section>
-        <h1>Your shopping list:</h1>
-        <ul className="list">
+        <Heading as="h1">Your shopping list:</Heading>
+        <UnorderedList className="list">
           {list.map((want) => (
-            <li key={want.id}>{want.want}</li>
+            <ListItem key={want.id}>{want.want}</ListItem>
           ))}
-        </ul>
+        </UnorderedList>
         <nav>
-          <ul>
-            <li>
-              <Link to="/" className="button">
-                Great, I'm done!
-              </Link>
-            </li>
-            <li>
-              <Link to="/shopping-for-love" className="button">
-                Make a new list...
-              </Link>
-            </li>
-          </ul>
+          <ButtonGroup>
+            <Button as={ReactLink} to="/">
+              Great, I'm done!
+            </Button>
+            <Button to="/shopping-for-love" as={ReactLink}>
+              Make a new list...
+            </Button>
+          </ButtonGroup>
         </nav>
       </section>
     );

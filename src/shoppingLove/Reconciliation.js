@@ -1,6 +1,14 @@
 import React, { useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { ListContext } from "./listContext";
+import {
+  ListItem,
+  Heading,
+  Input,
+  Button,
+  UnorderedList,
+  Text,
+} from "@chakra-ui/react";
 
 function Reconciliation() {
   const [positiveWant, setPositiveWant] = useState("");
@@ -26,30 +34,28 @@ function Reconciliation() {
   } else {
     return (
       <section>
-        <h1>Can you rephrase these?</h1>
-        <p>
+        <Heading as="h1">Can you rephrase these?</Heading>
+        <Text>
           Can you express everything you don't want in terms of something you do
           want?
-        </p>
+        </Text>
         {list.doNotWantList.length > counterNegWantList && (
           <form onSubmit={handleAddingPositiveWant}>
-            <p>
+            <Text>
               <strong>{list.doNotWantList[counterNegWantList].want}</strong>
-            </p>
-            <input
-              type="text"
-              className="input"
+            </Text>
+            <Input
               value={positiveWant}
               onChange={(e) => setPositiveWant(e.target.value)}
             />
-            <input type="submit" value="Convert" />
+            <Button type="submit">Convert</Button>
           </form>
         )}
-        <ul className="list">
+        <UnorderedList className="list">
           {list.reconciledList.map((want) => (
-            <li key={want.id}>{want.want}</li>
+            <ListItem key={want.id}>{want.want}</ListItem>
           ))}
-        </ul>
+        </UnorderedList>
       </section>
     );
   }

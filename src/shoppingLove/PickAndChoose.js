@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import Checkbox from "./Checkbox";
 import { ListContext } from "./listContext";
+import { CheckboxGroup, Heading, Text, Button, HStack } from "@chakra-ui/react";
 
 function PickAndChoose() {
   const { list, addToChosenList } = useContext(ListContext);
@@ -77,24 +78,29 @@ function PickAndChoose() {
   } else {
     return (
       <section>
-        <h1>Pick the top {topCount} things you're looking for</h1>
-        <p>You can't have everything.</p>
+        <Heading as="h1">
+          Pick the top {topCount} things you're looking for
+        </Heading>
+        <Text>You can't have everything.</Text>
         <form onSubmit={handleSavingChosenList}>
-          {compositeList.map((want) => (
-            <Checkbox
-              key={want.id}
-              id={want.id}
-              want={want.want}
-              handleTickingCheckbox={(checkboxElem, setChecked) =>
-                handleTickingCheckbox(checkboxElem, want.id, setChecked)
-              }
-              chosenItemsCount={chosenItemsCount}
-              topCount={topCount}
-            />
-          ))}
-
+          <CheckboxGroup>
+            <HStack>
+              {compositeList.map((want) => (
+                <Checkbox
+                  key={want.id}
+                  id={want.id}
+                  want={want.want}
+                  handleTickingCheckbox={(checkboxElem, setChecked) =>
+                    handleTickingCheckbox(checkboxElem, want.id, setChecked)
+                  }
+                  chosenItemsCount={chosenItemsCount}
+                  topCount={topCount}
+                />
+              ))}
+            </HStack>
+          </CheckboxGroup>
           {chosenItemsCount === topCount && (
-            <input type="submit" value="Save list" />
+            <Button type="submit">Save list</Button>
           )}
         </form>
       </section>
