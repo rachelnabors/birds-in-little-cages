@@ -1,12 +1,12 @@
-import React, { useState, useEffect, memo, useCallback } from "react";
-import lostLogs from "./logs.js";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import logs from "./logs.js";
 import { Link as ReactLink } from "react-router-dom";
 import {
   ListItem,
   Button,
   OrderedList,
   DarkMode,
-  space,
+  // space,
 } from "@chakra-ui/react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
@@ -42,7 +42,6 @@ const theme = extendTheme({
       "@keyframes fadeIn": {
         from: {
           opacity: 0,
-          height: 0,
         },
         to: {
           opacity: 1,
@@ -52,21 +51,60 @@ const theme = extendTheme({
   },
 });
 
-function LostLog() {
-  const [logsReceived, setLogsReceived] = useState([]);
-  const [logs, setLogs] = useState(lostLogs);
+function LogItem(props) {
+  if (props.lastLog || props.cntdLog) {
+    return (
+      <>
+        <ListItem fontFamily="mono">
+          <strong>Dating Log {props.id}</strong> {props.entry}
+        </ListItem>
+        <ListItem fontFamily="mono">
+          {props.lastLog ? (
+            <Button as={ReactLink} to="/">
+              End Transmission
+            </Button>
+          ) : null}
+          {props.cntdLog ? (
+            <Button
+              onClick={() => props.transferLogs(props.lostLogs.current[0])}
+            >
+              Continue
+            </Button>
+          ) : null}
+        </ListItem>
+      </>
+    );
+  } else {
+    return (
+      <ListItem fontFamily="mono">
+        <strong>Dating Log {props.id}</strong> {props.entry}
+      </ListItem>
+    );
+  }
+}
 
+function LostLog() {
+  // The array of logs we've received
+  // When it changes, React will map each log onto a list item
+  const [logsReceived, setLogsReceived] = useState([]);
+  // The array of logs we must read from. TBH, React doesn't need to track this, does it?
+  // const [logs, setLogs] = useState(lostLogs);
+  const lostLogs = useRef(logs);
+
+  // Moves a log from lostLogs to logsReceived
   const transferLogs = useCallback(
     (incomingLog) => {
-      setLogs(logs.slice(1));
+      // This function adds a log from lostLogs to logsReceived, triggering re-render
       setLogsReceived([...logsReceived, incomingLog]);
+      // and removes that entry from the logs array
+      lostLogs.current = lostLogs.current.slice(1);
     },
-    [logs]
+    [logsReceived]
   );
 
   useEffect(() => {
-    if (logs.length) {
-      const incomingLog = logs[0];
+    if (lostLogs.current.length) {
+      const incomingLog = lostLogs.current[0];
       if (incomingLog.id !== "920 cntd") {
         const receiveLog = setTimeout(() => {
           transferLogs(incomingLog);
@@ -76,71 +114,8 @@ function LostLog() {
         };
       }
     }
-  });
+  }, [transferLogs]);
 
-  const LogItem = memo(({ lastLog, cntdLog, id, entry }) => {
-    if (lastLog || cntdLog) {
-      return (
-        <>
-          <ListItem fontFamily="mono">
-            <strong>Log {id}</strong> {entry}
-          </ListItem>
-          <ListItem fontFamily="mono">
-            {lastLog ? (
-              <Button as={ReactLink} to="/">
-                End Transmission
-              </Button>
-            ) : null}
-            {cntdLog ? (
-              <Button onClick={() => transferLogs(logs[0])}>Continue</Button>
-            ) : null}
-          </ListItem>
-        </>
-      );
-    } else {
-      return (
-        <ListItem fontFamily="mono">
-          <strong>Dating Log {id}</strong> {entry}
-        </ListItem>
-      );
-    }
-  });
-
-  // function LogItem(props) {
-  //   if (props.lastLog || props.cntdLog) {
-  //     return (
-  //       <>
-  //         <ListItem fontFamily="mono">
-  //           <strong>Log {props.id}</strong> {props.entry}
-  //         </ListItem>
-  //         <ListItem fontFamily="mono">
-  //           {props.lastLog ? (
-  //             <Button as={ReactLink} to="/">
-  //               End Transmission
-  //             </Button>
-  //           ) : null}
-  //           {props.cntdLog ? (
-  //             <Button onClick={() => transferLogs(logs[0])}>Continue</Button>
-  //           ) : null}
-  //         </ListItem>
-  //       </>
-  //     );
-  //   } else {
-  //     return (
-  //       <ListItem fontFamily="mono">
-  //         <strong>Dating Log {props.id}</strong> {props.entry}
-  //       </ListItem>
-  //     );
-  //   }
-  // }
-
-  function keyGen(text) {
-    return (
-      text.toString().split(" ").join("").toLowerCase() +
-      text.length +
-      Math.floor(Math.random() * (1000 - 0) + 0)
-    );
-  }
   return (
     <ChakraProvider theme={theme}>
       <DarkMode>
@@ -150,17 +125,19 @@ function LostLog() {
               <LogItem
                 key={log.id}
                 cntdLog={
-                  logs.length &&
+                  lostLogs.current.length &&
                   (log.id === 920 || log.id === "920 cntd") &&
                   index + 1 === logsReceived.length
                 }
                 lastLog={
-                  !logs.length &&
+                  !lostLogs.current.length &&
                   (log.id === 920 || log.id === "920 cntd") &&
                   index + 1 === logsReceived.length
                 }
                 id={log.id}
                 entry={log.entry}
+                transferLogs={transferLogs}
+                lostLogs={lostLogs}
               />
             );
           })}
