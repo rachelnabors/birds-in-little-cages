@@ -2,16 +2,16 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import logs from "./logs.js";
 import { Link as ReactLink } from "react-router-dom";
 import {
+  Center,
   ListItem,
   Button,
   OrderedList,
   DarkMode,
-  // space,
+  ChakraProvider,
+  extendTheme,
 } from "@chakra-ui/react";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 // TODO
-// - Stop rerendering EVERY TIME—does the state need to impact the whole list?
 // - Narrow it up a bit
 // - nicer button color
 // - center all
@@ -29,6 +29,7 @@ const theme = extendTheme({
       ol: {
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
         flexWrap: "nowrap",
         justifyContent: "flex-end",
         height: "100%",
@@ -55,10 +56,10 @@ function LogItem(props) {
   if (props.lastLog || props.cntdLog) {
     return (
       <>
-        <ListItem fontFamily="mono">
+        <ListItem fontFamily="mono" w="100%" maxWidth="50rem">
           <strong>Dating Log {props.id}</strong> {props.entry}
         </ListItem>
-        <ListItem fontFamily="mono">
+        <ListItem fontFamily="mono" w="100%" maxWidth="50rem">
           {props.lastLog ? (
             <Button as={ReactLink} to="/">
               End Transmission
@@ -76,7 +77,7 @@ function LogItem(props) {
     );
   } else {
     return (
-      <ListItem fontFamily="mono">
+      <ListItem fontFamily="mono" w="100%" maxWidth="50rem">
         <strong>Dating Log {props.id}</strong> {props.entry}
       </ListItem>
     );
@@ -108,7 +109,7 @@ function LostLog() {
       if (incomingLog.id !== "920 cntd") {
         const receiveLog = setTimeout(() => {
           transferLogs(incomingLog);
-        }, incomingLog.delay * 200);
+        }, incomingLog.delay * 2000);
         return () => {
           clearTimeout(receiveLog);
         };
