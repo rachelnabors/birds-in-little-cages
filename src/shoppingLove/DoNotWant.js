@@ -1,6 +1,13 @@
 import React, { useState, useContext } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link as ReactLink, Navigate } from "react-router-dom";
 import { ListContext } from "./listContext";
+import {
+  ListItem,
+  Heading,
+  Input,
+  Button,
+  UnorderedList,
+} from "@chakra-ui/react";
 
 function DoNotWant() {
   const { list } = useContext(ListContext);
@@ -24,27 +31,26 @@ function DoNotWantExercise() {
 
   return (
     <section>
-      <h1>
+      <Heading as="h1">
         What are you <em>not</em> looking for?
-      </h1>
+      </Heading>
       <form onSubmit={handleAddingWant}>
-        <input
+        <Input
           type="text"
-          className="input"
           value={newDoNotWant}
           onChange={(e) => setNewDoNotWant(e.target.value)}
         />
-        <input type="submit" value="Add" />
+        <Button type="submit">Add</Button>
       </form>
-      <ul className="list">
+      <UnorderedList className="list">
         {list.doNotWantList.map((want) => (
-          <li key={want.id}>{want.want}</li>
+          <ListItem key={want.id}>{want.want}</ListItem>
         ))}
-      </ul>
+      </UnorderedList>
       {list.doNotWantList.length > 0 && (
-        <Link to="../reconciliation" className="button">
+        <Button as={ReactLink} to="../reconciliation" className="button">
           Great, I'm done!
-        </Link>
+        </Button>
       )}
     </section>
   );

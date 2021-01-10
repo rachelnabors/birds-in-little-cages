@@ -1,6 +1,13 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link as ReactLink } from "react-router-dom";
 import { ListContext } from "./listContext";
+import {
+  ListItem,
+  Heading,
+  Input,
+  Button,
+  UnorderedList,
+} from "@chakra-ui/react";
 
 function Want() {
   const [newWant, setNewWant] = useState("");
@@ -15,25 +22,24 @@ function Want() {
 
   return (
     <section>
-      <h1>What are you looking for?</h1>
+      <Heading as="h1">What are you looking for?</Heading>
       <form onSubmit={handleAddingWant}>
-        <input
-          type="text"
-          className="input"
+        <Input
+          placeholder="Example: cute, funny, smart, etc."
           value={newWant}
           onChange={(e) => setNewWant(e.target.value)}
         />
-        <input type="submit" value="Add" />
+        <Button type="submit">Add</Button>
       </form>
-      <ul className="list">
+      <UnorderedList className="list">
         {list.wantList.map((want) => (
-          <li key={want.id}>{want.want}</li>
+          <ListItem key={want.id}>{want.want}</ListItem>
         ))}
-      </ul>
+      </UnorderedList>
       {list.wantList.length > 0 && (
-        <Link to="do-not-want" className="button">
+        <Button as={ReactLink} to="do-not-want" className="button">
           Great, I'm done!
-        </Link>
+        </Button>
       )}
     </section>
   );

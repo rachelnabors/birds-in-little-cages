@@ -7,17 +7,21 @@ import LostLog from "./lostLog/LostLog";
 import HolidaysLeft from "./holidaysLeft/HolidaysLeft";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./theme/index.js";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shopping-for-love/*" element={<ShoppingLove />} />
-        <Route path="/lost-log" element={<LostLog />} />
-        <Route path="/holidays-Left" element={<HolidaysLeft />} />
-      </Routes>
-    </BrowserRouter>
+    <ChakraProvider theme={theme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shopping-for-love/*" element={<ShoppingLove />} />
+          <Route path="/lost-log" element={<LostLog />} />
+          <Route path="/holidays-Left" element={<HolidaysLeft />} />
+        </Routes>
+      </BrowserRouter>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
