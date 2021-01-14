@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import logs from "./logs.js";
 import { Link as ReactLink } from "react-router-dom";
 import {
-  Center,
   ListItem,
   Button,
   OrderedList,
@@ -11,20 +10,17 @@ import {
   extendTheme,
 } from "@chakra-ui/react";
 
-// TODO
-// - Narrow it up a bit
-// - nicer button color
-// - center all
-
 const theme = extendTheme({
   styles: {
     global: (props) => ({
       "html, body": {
         background: "black",
         height: "100%",
+        overflow: "auto",
       },
       "#root": {
         height: "100%",
+        overflow: "auto",
       },
       ol: {
         display: "flex",
@@ -32,7 +28,8 @@ const theme = extendTheme({
         alignItems: "center",
         flexWrap: "nowrap",
         justifyContent: "flex-end",
-        height: "100%",
+        minHeight: "100%",
+        scrollBehavior: "smooth",
       },
       li: {
         listStyle: "none",
@@ -92,6 +89,10 @@ function LostLog() {
   // const [logs, setLogs] = useState(lostLogs);
   const lostLogs = useRef(logs);
 
+  // need to access the logList as it grows so we can scroll to the bottom
+  // put it in a ref for future use!
+  const logList = useRef(null);
+
   // Moves a log from lostLogs to logsReceived
   const transferLogs = useCallback(
     (incomingLog) => {
@@ -110,6 +111,7 @@ function LostLog() {
         const receiveLog = setTimeout(() => {
           transferLogs(incomingLog);
         }, incomingLog.delay * 2000);
+        logList.current.scrollIntoView(false);
         return () => {
           clearTimeout(receiveLog);
         };
@@ -117,10 +119,14 @@ function LostLog() {
     }
   }, [transferLogs]);
 
+  useEffect(() => {
+    logList.current.scrollIntoView(false);
+  }, [transferLogs]);
+
   return (
     <ChakraProvider theme={theme}>
       <DarkMode>
-        <OrderedList>
+        <OrderedList ref={logList}>
           {logsReceived.map((log, index) => {
             return (
               <LogItem
