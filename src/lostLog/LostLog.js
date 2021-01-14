@@ -111,7 +111,6 @@ function LostLog() {
         const receiveLog = setTimeout(() => {
           transferLogs(incomingLog);
         }, incomingLog.delay * 2000);
-        logList.current.scrollIntoView(false);
         return () => {
           clearTimeout(receiveLog);
         };
